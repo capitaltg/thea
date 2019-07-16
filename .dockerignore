@@ -1,0 +1,11 @@
+.git
+.cache
+
+**/*.class
+
+*.md
+!README*.md
+README-secret.md
+
+thea-ui/node_modules/
+build/

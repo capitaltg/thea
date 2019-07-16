@@ -1,0 +1,7 @@
+<h2>My Profile</h2>
+<table class="table table-bordered table-sm">
+  <tr *ngFor="let property of auth.userProfile | keyvalue">
+    <th>{{property.key}}</th>
+    <td>{{property.value}}</td>
+  </tr>         
+</table>

@@ -1,0 +1,16 @@
+**/bin/
+/.gradle/
+/.settings/
+/.classpath
+/.settings
+/build
+.classpath
+.settings
+build
+/**/.project
+log/
+.idea
+*.iml
+out/
+**.db
+src/main/generated

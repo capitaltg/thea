@@ -1,0 +1,5 @@
+include ':thea-ui'
+include ':thea-api'
+
+rootProject.name='thea'
+

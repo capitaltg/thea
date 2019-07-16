@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/search">Certificates</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/trusted">Trusted</a>
+      </li>
+      <!--
+      <li class="nav-item">
+        <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle>About</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button ngbDropdownItem><a routerLink="/about">Certificate Checker</a></button>
+              <button ngbDropdownItem><a routerLink="/trusted">Trusted Certificates</a></button>
+            </div>
+          </div>        
+      </li>
+      -->
+    </ul>
+
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a href="https://github.com/capitaltg/thea">
+          <img class="text-right float-right" style="position: absolute;right:0px;top:0px" width="149" height="149" src="assets/fork.png" class="attachment-full size-full" alt="Fork me on GitHub" >
+        </a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav" *ngIf="false">
+      <li class="nav-item" *ngIf="!auth.isAuthenticated()">
+        <a class="nav-link" (click)="auth.login()">Login</a>
+      </li>
+
+      <li class="nav-item" *ngIf="auth.userProfile">
+        <a class="nav-link" routerLink="/profile">Profile ({{auth.userProfile?.nickname}})</a>
+      </li>
+      <li class="nav-item" *ngIf="auth.isAuthenticated()">
+        <a class="nav-link" (click)="auth.logout()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
