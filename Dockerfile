@@ -16,7 +16,7 @@ WORKDIR /home/gradle/
 RUN gradle clean disttar -x :thea-ui:buildAngular
 
 # Create runtime image
-FROM openjdk:11-slim
+FROM capitaltg/slimj
 
 RUN useradd ctg
 RUN mkdir /opt/ctg
@@ -25,6 +25,7 @@ RUN chown -R ctg /opt/ctg
 USER ctg
 COPY --from=build /home/gradle/thea-api/build/distributions/thea-api.tar /tmp/thea.tar
 RUN tar xf /tmp/thea.tar -C /opt/ctg/
+RUN rm /tmp/thea.tar
 
 EXPOSE 7070
 ENTRYPOINT /opt/ctg/thea-api/bin/thea-api
