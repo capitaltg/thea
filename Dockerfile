@@ -1,9 +1,11 @@
 # Build web ui distro
 FROM node:10.16.0-jessie as node
-COPY thea-ui /tmp/
-WORKDIR /tmp/thea-ui
 
+COPY thea-ui/package.json /tmp/
+WORKDIR /tmp/thea-ui
 RUN npm install --verbose
+
+COPY thea-ui /tmp/
 RUN npm run ng build -- --aot --output-hashing all --extract-css true --build-optimizer --vendor-chunk --prod --configuration=production
 
 # Build API microservice
@@ -19,7 +21,7 @@ WORKDIR /
 RUN tar xf /home/gradle/thea-api/build/distributions/thea-api.tar
 
 # Create runtime image
-FROM adoptopenjdk/openjdk11:x86_64-alpine-jre-11.0.3_7
+FROM adoptopenjdk/openjdk11:jre-11.0.4_11-alpine
 
 RUN adduser -D ctg
 RUN mkdir /opt/ctg
