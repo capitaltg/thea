@@ -1,11 +1,15 @@
 .git
 .cache
+.dockerignore
 
 **/*.class
 
 *.md
 !README*.md
 README-secret.md
+Dockerfile
 
 thea-ui/node_modules/
+thea-ui/dist
 build/
+
