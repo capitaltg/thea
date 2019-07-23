@@ -15,7 +15,7 @@ Certificate Checker is written using Groovy and Spring Boot for the back-end API
 After cloning the repository, you can run `./gradlew eclipse` and then import it as an eclipse project.  Before importing the `thea-ui` folder into an editor (Atom and VSCode are two good options), run `npm install` from that folder to install the necessary JavaScript libraries.
 
 ### Running Thea locally
-You can run the backend Thea API service locally by running `TheaServer.java` in Eclipse or by running `./gradlew run`.  To run the front-end application locally, run `ng serve --proxy-config proxy.conf.json`.  That will start a local development server and will also proxy all requests made to `/api` to the backend service, which should now be running on port 7070.
+You can run the backend Thea API service locally by running `TheaServer.java` in Eclipse or by running `./gradlew bootRun`.  To run the front-end application locally, run `ng serve --proxy-config proxy.conf.json`.  That will start a local development server and will also proxy all requests made to `/api` to the backend service, which should now be running on port 7070.
 
 ### Design
 UI design components use [Bootstrap](https://getbootstrap.com) with the Flatly theme found [here](https://bootswatch.com/flatly/).
@@ -25,13 +25,13 @@ To get Certificate Checker up and running quickly with [Docker](https://www.dock
 
 ```
 docker pull capitaltg/thea
-docker run --rm -p 7070:7070 capitaltg/thea
+docker run -it -p 7070:7070 capitaltg/thea
 ```
 
 Then, point your browser to http://localhost:7070. This command will run Certificate Checker using an embedded h2 database.  You can also run Certificate Checker with a real database connection. For a MySQL database, you can use the following syntax: 
 
 ```
-docker run -d --rm -p 7070:7070  --env-file thea.env capitaltg/thea
+docker run -d -p 7070:7070 --env-file thea.env capitaltg/thea
 ```
 
 where thea.env contains:

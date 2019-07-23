@@ -15,21 +15,18 @@ COPY . /home/gradle
 COPY --from=node /tmp/dist/ /home/gradle/thea-ui/dist/
 
 WORKDIR /home/gradle/
-RUN gradle clean disttar -x :thea-ui:buildAngular
-
-WORKDIR /
-RUN tar xf /home/gradle/thea-api/build/distributions/thea-api.tar
+RUN gradle clean build -x :thea-ui:buildAngular
 
 # Create runtime image
 FROM adoptopenjdk/openjdk11:jre-11.0.4_11-alpine
 
 RUN adduser -D ctg
 RUN mkdir /opt/ctg
-RUN chown -R ctg /opt/ctg
+RUN chown -R ctg:ctg /opt/ctg
 
 USER ctg
-COPY --chown=ctg --from=build /thea-api /opt/ctg/thea-api
+COPY --chown=ctg --from=build /home/gradle/thea-api/build/libs/thea-api.jar /opt/ctg/thea-api.jar
 
 EXPOSE 7070
-ENTRYPOINT /opt/ctg/thea-api/bin/thea-api
+ENTRYPOINT java -jar /opt/ctg/thea-api.jar
 
