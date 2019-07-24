@@ -28,7 +28,7 @@
       -->
     </ul>
 
-    <ul class="navbar-nav">
+    <ul class="navbar-nav" *ngIf="appConfigService.get('show_fork_banner') == 'true'">
       <li class="nav-item">
         <a href="https://github.com/capitaltg/thea">
           <img class="text-right float-right" style="position: absolute;right:0px;top:0px" width="149" height="149" src="assets/fork.png" class="attachment-full size-full" alt="Fork me on GitHub" >
