@@ -15,18 +15,18 @@ interface CertificateChainRepository extends PagingAndSortingRepository <Certifi
   List<CertificateChain> findByHostname(String hostname)
   @Query(value='''
 select distinct chain.hostname from
-  THEA.CertificateChain chain
-    join THEA.CertificateChain_Certificate ccc
+  CertificateChain chain
+    join CertificateChain_Certificate ccc
     on chain.certificateChainId = ccc.CertificateChain_certificateChainId
-  join THEA.Certificate certificate
+  join Certificate certificate
     on certificate.certificateId = ccc.certificates_certificateId
 where certificate.sha256 = :sha256
 order by hostname
 ''', nativeQuery=true)
   List<String> findForCertificate(@Param('sha256') String sha256)
 
-  @Query(value='''SELECT * FROM THEA.CERTIFICATECHAIN AS T1 WHERE hideResult=false and NOT EXISTS (
-    SELECT * FROM THEA.CERTIFICATECHAIN AS T2 WHERE T2.hostname = T1.hostname AND T2.timestamp > T1.timestamp)
+  @Query(value='''SELECT * FROM CertificateChain AS T1 WHERE hideResult=false and NOT EXISTS (
+    SELECT * FROM CertificateChain AS T2 WHERE T2.hostname = T1.hostname AND T2.timestamp > T1.timestamp)
     order by timestamp desc limit 10''',
     nativeQuery=true)
   List<CertificateChain> findRecent()
