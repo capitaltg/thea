@@ -1,5 +1,6 @@
 package com.capitaltg.thea.util
 
+import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 
 import org.bouncycastle.asn1.x509.Extension
@@ -24,6 +25,12 @@ class CertificateUtil {
     BigInteger big = new BigInteger(1, array)
     String string = big.toString(16).toUpperCase(Locale.ENGLISH)
     return org.apache.commons.lang3.StringUtils.leftPad(string, string.size() % 2 + string.size(), '0')
+  }
+
+  static X509Certificate loadCertificate(String resourceName) {
+    def factory = CertificateFactory.getInstance('X.509')
+    def stream = CertificateUtil.classLoader.getResourceAsStream(resourceName)
+    return (X509Certificate) factory.generateCertificate(stream)
   }
 
 }

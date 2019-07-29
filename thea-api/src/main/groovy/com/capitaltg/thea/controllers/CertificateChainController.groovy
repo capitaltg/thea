@@ -29,7 +29,7 @@ class CertificateChainController {
   @GetMapping('/{id}')
   CertificateChain getCertificateChain(@PathVariable Long id) {
     LOGGER.info("Getting certificate chain $id")
-    return certificateService.getCertificateChain(id)
+    return certificateService.getCertificateChainById(id)
   }
 
   @GetMapping('/recent')

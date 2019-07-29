@@ -9,7 +9,7 @@ class ListSerializer implements AttributeConverter<List, String> {
 
   @Override
   String convertToDatabaseColumn(List attribute) {
-    return new JsonBuilder(attribute).toPrettyString()
+    return new JsonBuilder(attribute).toString()
   }
 
   @Override
