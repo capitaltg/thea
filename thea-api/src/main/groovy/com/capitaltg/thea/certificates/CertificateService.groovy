@@ -2,6 +2,7 @@ package com.capitaltg.thea.certificates
 
 import com.capitaltg.thea.objects.Certificate
 import com.capitaltg.thea.objects.CertificateChain
+import com.google.common.base.Preconditions
 
 import java.security.SecureRandom
 import java.security.Security
@@ -53,8 +54,7 @@ class CertificateService {
   @Autowired
   CertificateChainValidator validator
 
-  @Autowired
-  TrustAnchorManager trustAnchorManager
+  TrustAnchorManager trustAnchorManager = TrustAnchorManager.singleton()
 
   CertificateService() {
     System.setProperty('com.sun.net.ssl.checkRevocation', 'true')
@@ -139,8 +139,8 @@ class CertificateService {
     return chain
   }
 
-  CertificateChain getCertificateChain(long id) {
-    return certificateChainRepository.findById(id).get()
+  CertificateChain getCertificateChainById(long id) {
+    return certificateChainRepository.findById(id).orElse(null)
   }
 
   Certificate getCertificate(String sha256) {
@@ -150,6 +150,7 @@ class CertificateService {
   List<Certificate> getCertificateChain(String sha256) {
     def list = []
     def certificate = certificateRepository.findBySha256(sha256)
+    Preconditions.checkNotNull(certificate, "Certificate with SHA256 hash $sha256 does not exist")
     def authorityKeyIdentifier = certificate.authorityKeyIdentifier
     while (authorityKeyIdentifier) {
       def certificates = certificateRepository.findBySubjectKeyIdentifier(authorityKeyIdentifier)
@@ -165,11 +166,12 @@ class CertificateService {
     return list
   }
 
-  List<Certificate> getSimilarCertificates(String subjectKeyIdentifier, String sha256) {
-    if (!subjectKeyIdentifier) {
+  List<Certificate> getSimilarCertificates(String sha256) {
+    def certificate = getCertificate(sha256)
+    if (!certificate || !certificate.subjectKeyIdentifier) {
       return []
     }
-    def list = certificateRepository.findBySubjectKeyIdentifier(subjectKeyIdentifier)
+    def list = certificateRepository.findBySubjectKeyIdentifier(certificate.subjectKeyIdentifier)
     return list.findAll { it.sha256 != sha256 }
   }
 

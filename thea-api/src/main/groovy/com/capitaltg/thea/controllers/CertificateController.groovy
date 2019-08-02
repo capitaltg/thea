@@ -76,8 +76,7 @@ ${it.base64Encoding}
   @GetMapping('/{sha256}/similar')
   def getSimilarCertificates(@PathVariable String sha256) {
     LOGGER.info("Getting certificate $sha256")
-    def certificate = certificateService.getCertificate(sha256)
-    return certificateService.getSimilarCertificates(certificate.subjectKeyIdentifier, sha256)
+    return certificateService.getSimilarCertificates(sha256)
   }
 
   Map parseFilters(String filters) {

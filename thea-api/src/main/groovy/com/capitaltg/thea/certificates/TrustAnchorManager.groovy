@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component
 @Component
 class TrustAnchorManager {
 
-  static TrustAnchorManager trustAnchorManager = new TrustAnchorManager()
+  private static final TrustAnchorManager TRUST_ANCHOR_MANAGER = new TrustAnchorManager()
   List subjectKeyIdentifiers
 
   static TrustAnchorManager singleton() {
-    return trustAnchorManager
+    return TRUST_ANCHOR_MANAGER
   }
 
   TrustAnchorManager() {

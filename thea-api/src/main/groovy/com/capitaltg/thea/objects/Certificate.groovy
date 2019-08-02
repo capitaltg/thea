@@ -24,6 +24,7 @@ import org.apache.commons.codec.binary.StringUtils
 import org.bouncycastle.asn1.x500.style.BCStyle
 import org.bouncycastle.asn1.x500.style.IETFUtils
 import org.bouncycastle.asn1.x509.AuthorityKeyIdentifier
+import org.bouncycastle.asn1.x509.BasicConstraints
 import org.bouncycastle.asn1.x509.Extension
 import org.bouncycastle.cert.X509CertificateHolder
 import org.hibernate.annotations.NaturalId
@@ -48,6 +49,7 @@ class Certificate {
   String subjectKeyIdentifier
   String authorityKeyIdentifier
   boolean trusted
+  boolean certificateAuthority
   LocalDateTime notBefore
   LocalDateTime notAfter
   @Column(length = 4000)
@@ -104,6 +106,14 @@ class Certificate {
       AuthorityKeyIdentifier aki = AuthorityKeyIdentifier.getInstance(value.toASN1Primitive().encoded)
       byte[] keyIdentifier = aki.getKeyIdentifier()
       authorityKeyIdentifier = hexify(keyIdentifier)
+    }
+
+    value = extensions?.getExtensionParsedValue(Extension.basicConstraints)
+    if (value) {
+      BasicConstraints bc = BasicConstraints.getInstance(value.toASN1Primitive().encoded)
+      if (bc.isCA()) {
+        this.certificateAuthority = true
+      }
     }
 
     Collection<List<?>> alternativeNames = certificate.getSubjectAlternativeNames()
