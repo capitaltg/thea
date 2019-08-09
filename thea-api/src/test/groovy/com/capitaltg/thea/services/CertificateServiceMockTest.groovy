@@ -1,9 +1,12 @@
-package com.capitaltg.thea.certificates
+package com.capitaltg.thea.services
 
 import static org.junit.Assert.fail
 
 import static org.mockito.Mockito.times
 import static org.mockito.Mockito.verify
+
+import com.capitaltg.thea.certificates.CertificateRepository
+import com.capitaltg.thea.repositories.CertificateChainRepository
 
 import org.junit.Test
 import org.junit.runner.RunWith

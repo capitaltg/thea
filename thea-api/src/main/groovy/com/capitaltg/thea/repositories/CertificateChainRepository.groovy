@@ -1,4 +1,4 @@
-package com.capitaltg.thea.certificates
+package com.capitaltg.thea.repositories
 
 import com.capitaltg.thea.objects.CertificateChain
 

@@ -15,3 +15,21 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
     open-in-view: true
+
+  session:
+    store-type: none
+
+# Working GitHub configuration
+security:
+  basic:
+    enabled: false
+  oauth2:
+    client:
+      clientId: <clientId>
+      clientSecret: <clientSecret>
+      accessTokenUri: https://github.com/login/oauth/access_token
+      userAuthorizationUri: https://github.com/login/oauth/authorize
+      scope: user:email
+    resource:
+      userInfoUri: https://api.github.com/user
+

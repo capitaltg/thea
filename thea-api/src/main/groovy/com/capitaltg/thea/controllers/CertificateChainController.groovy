@@ -1,8 +1,8 @@
 package com.capitaltg.thea.controllers
 
-import com.capitaltg.thea.certificates.CertificateChainRepository
-import com.capitaltg.thea.certificates.CertificateService
 import com.capitaltg.thea.objects.CertificateChain
+import com.capitaltg.thea.repositories.CertificateChainRepository
+import com.capitaltg.thea.services.CertificateService
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

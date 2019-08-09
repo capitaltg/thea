@@ -1,8 +1,15 @@
-{
-  "/api/*": {
+[
+  {
+    "context": [
+      "/api/**",
+      "/login**",
+      "/callback**"
+    ],
     "target": "http://localhost:7070",
     "secure": false,
     "logLevel": "debug",
-    "changeOrigin": true
+    "changeOrigin": false,
+    "autoRewrite": true
   }
-}
+]
+

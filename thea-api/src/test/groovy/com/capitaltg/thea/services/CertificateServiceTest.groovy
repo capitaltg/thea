@@ -1,4 +1,4 @@
-package com.capitaltg.thea.certificates
+package com.capitaltg.thea.services
 
 import java.security.KeyStore
 

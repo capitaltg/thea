@@ -1,7 +1,12 @@
-package com.capitaltg.thea.certificates
+package com.capitaltg.thea.services
 
+import com.capitaltg.thea.certificates.CertificateChainValidator
+import com.capitaltg.thea.certificates.CertificateRepository
+import com.capitaltg.thea.certificates.GullibleTrustManager
+import com.capitaltg.thea.certificates.TrustAnchorManager
 import com.capitaltg.thea.objects.Certificate
 import com.capitaltg.thea.objects.CertificateChain
+import com.capitaltg.thea.repositories.CertificateChainRepository
 import com.google.common.base.Preconditions
 
 import java.security.SecureRandom
