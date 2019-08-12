@@ -57,6 +57,36 @@ RUN keytool -import -trustcacerts -cacerts \
 USER ctg
 ```
 
+## Enabling OAuth Login
+Certificate Checker can be configured to allow users to login via OAuth.  Users can then setup watches
+on certificate chains and be alerted when they change and/or are near expiration.  To do this, set
+`THEA_UI_SHOW_LOGIN=true` and configure the Spring Boot OAuth settings.  The default OAuth configuration
+uses GitHub and you can enable that by setting values for:
+```
+SECURITY_OAUTH2_CLIENT_CLIENT_ID=<clientId>
+SECURITY_OAUTH2_CLIENT_CLIENT_SECRET=<clientSecret>
+```
+
+### Auth0
+You can configure Spring Boot to use Auth0 by adding these configurations in addition to the client ID
+and secret for a domain called domainX:
+```
+SECURITY_OAUTH2_CLIENT_ACCESS_TOKEN_URI=https://domainX.auth0.com/oauth/token
+SECURITY_OAUTH2_CLIENT_USER_AUTHORIZATION_URI=https://domainX.auth0.com/authorize
+SECURITY_OAUTH2_CLIENT_SCOPE=openid profile email
+SECURITY_OAUTH2_RESOURCE_USER_INFO_URI=https://domainX.auth0.com/userinfo
+```
+
+### Google
+You can configure Spring Boot to use Google by adding these configurations in addition to the client ID
+and secret:
+```
+SECURITY_OAUTH2_CLIENT_ACCESS_TOKEN_URI=https://www.googleapis.com/oauth2/v3/token
+SECURITY_OAUTH2_CLIENT_USER_AUTHORIZATION_URI=https://accounts.google.com/o/oauth2/auth
+SECURITY_OAUTH2_CLIENT_SCOPE=email
+SECURITY_OAUTH2_RESOURCE_USER_INFO_URI=https://www.googleapis.com/userinfo/v2/me
+```
+
 License
 -------
 Certificate Checker is made available under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0).

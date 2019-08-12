@@ -9,7 +9,6 @@ export class AppComponent {
 
   constructor(private auth: AuthService,
     appConfigService: AppConfigService) {
-    auth.handleAuthentication();
     appConfigService.load();
   }
 

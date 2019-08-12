@@ -2,6 +2,7 @@ package com.capitaltg.thea.config
 
 import com.capitaltg.thea.objects.Certificate
 import com.capitaltg.thea.objects.CertificateChain
+import com.capitaltg.thea.objects.User
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -30,7 +31,7 @@ class DataConfiguration {
     properties.setProperty('hibernate.show_sql', 'false')
     properties.setProperty('hibernate.hbm2ddl.auto', 'update')
     properties.setProperty('connection.autocommit', 'true')
-    factoryBean.setAnnotatedClasses(Certificate, CertificateChain)
+    factoryBean.setAnnotatedClasses(Certificate, CertificateChain, User)
     factoryBean.setHibernateProperties(properties)
     LOGGER.info('Finished initiating DataConfiguration')
     return factoryBean

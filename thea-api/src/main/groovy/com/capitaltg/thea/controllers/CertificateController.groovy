@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
-import com.capitaltg.thea.certificates.CertificateService
 import com.capitaltg.thea.objects.Certificate
+import com.capitaltg.thea.services.CertificateService
 
 import javax.servlet.http.HttpServletResponse
 

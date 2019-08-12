@@ -8,6 +8,7 @@ import { AppConfigService } from '../../services';
 })
 export class AppNavbarComponent implements OnInit {
 
+  public collapsed = true;
   appConfigService: AppConfigService;
   auth: AuthService;
 
