@@ -1,4 +1,6 @@
-server.port :  7070
+server:
+  port:  7070
+  use-forward-headers: true
 
 spring:
   datasource:
@@ -32,4 +34,3 @@ security:
       scope: user:email
     resource:
       userInfoUri: https://api.github.com/user
-
