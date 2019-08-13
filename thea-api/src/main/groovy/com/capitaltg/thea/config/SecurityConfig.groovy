@@ -16,7 +16,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
       .antMatcher('/**')
       .authorizeRequests()
         .antMatchers('/api/user').authenticated()
-        .antMatchers('/api/**', '/login**', '/error**').permitAll()
+        .antMatchers('/**').permitAll()
       .anyRequest()
         .authenticated()
       .and().logout().logoutSuccessUrl('/').permitAll()
