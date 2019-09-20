@@ -11,13 +11,19 @@ plugins {
 
 repositories { jcenter() }
 
+configurations {
+  developmentOnly
+  runtimeClasspath {
+    extendsFrom developmentOnly
+  }
+}
+
 dependencies {
   compile 'org.apache.commons:commons-lang3:3.9'
 
   compile 'org.slf4j:slf4j-api:1.7.24'
   compile 'org.springframework.boot:spring-boot-starter-web:2.1.3.RELEASE'
   compile 'org.springframework.boot:spring-boot-starter-data-jpa:2.1.3.RELEASE'
-  compile 'org.springframework.boot:spring-boot-devtools:2.1.3.RELEASE'
   compile 'org.springframework.boot:spring-boot-starter-security:2.1.3.RELEASE'
   compile 'org.springframework.session:spring-session-data-redis:2.1.3.RELEASE'
   compile 'io.lettuce:lettuce-core:5.1.8.RELEASE'
@@ -32,6 +38,8 @@ dependencies {
 
   compile 'org.apache.httpcomponents:httpclient:4.5.7'
   compile 'com.h2database:h2:1.4.197'
+
+  developmentOnly 'org.springframework.boot:spring-boot-devtools:2.1.3.RELEASE'
 
   testCompile 'org.springframework.boot:spring-boot-starter-test:2.1.3.RELEASE'
   testCompile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.19.v20190610'
