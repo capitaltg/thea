@@ -27,6 +27,6 @@ RUN chown -R ctg:ctg /opt/ctg
 USER ctg
 COPY --chown=ctg --from=build /home/gradle/thea-api/build/libs/thea-api.jar /opt/ctg/thea-api.jar
 
-EXPOSE 7070
+EXPOSE 8080
 ENTRYPOINT java -jar /opt/ctg/thea-api.jar
 
