@@ -79,7 +79,7 @@ class Certificate {
     this.sha1 = hexify(MessageDigest.getInstance('SHA-1').digest( certificate.getEncoded() ))
     this.sha256 = hexify(MessageDigest.getInstance('SHA-256').digest( certificate.getEncoded() ))
     this.md5 = hexify(MessageDigest.getInstance('MD5').digest( certificate.getEncoded() ))
-    this.base64Encoding = StringUtils.newStringUsAscii(Base64.encodeBase64(certificate.getEncoded(), true))
+    this.base64Encoding = StringUtils.newStringUsAscii(Base64.encodeBase64(certificate.getEncoded(), true)).trim()
 
     if (certificate.publicKey instanceof RSAPublicKey) {
       RSAPublicKey rsaPk = (RSAPublicKey) certificate.publicKey
