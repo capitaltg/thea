@@ -19,7 +19,7 @@ describe('HomeComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ 
+      declarations: [
         HomeComponent,
         CertificateChainComponent,
         CertificateComponent,

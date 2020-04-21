@@ -15,8 +15,8 @@ describe('CertificateViewerComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ 
-        CertificateViewerComponent, 
+      declarations: [
+        CertificateViewerComponent,
         CertificateComponent ]
     })
     .compileComponents();

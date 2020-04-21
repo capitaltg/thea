@@ -19,7 +19,7 @@ export class ChainComponent implements OnInit {
   ngOnInit() {
     const certificateChainId = this.route.snapshot.paramMap.get('certificateChainId');
     if (certificateChainId) {
-      this.certificateService.getCertificateChain(certificateChainId).subscribe ( 
+      this.certificateService.getCertificateChain(certificateChainId).subscribe (
         response => {
           this.chain = response;
         });
@@ -27,7 +27,7 @@ export class ChainComponent implements OnInit {
   }
 
   reinspect(): void {
-    this.getNewCertificateChain(this.chain.hostname)
+    this.getNewCertificateChain(this.chain.hostname);
     this.error = null;
   }
 
