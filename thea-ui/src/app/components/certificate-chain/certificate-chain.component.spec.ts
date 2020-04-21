@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { CertificateChainComponent } from './certificate-chain.component';
+import { CertificateComponent } from '../certificate/certificate.component';
 
 describe('CertificateChainComponent', () => {
   let component: CertificateChainComponent;
@@ -8,7 +11,13 @@ describe('CertificateChainComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CertificateChainComponent ]
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
+      declarations: [ 
+        CertificateChainComponent,
+        CertificateComponent ]
     })
     .compileComponents();
   }));
