@@ -1,0 +1,26 @@
+name: Run UI Tests
+
+on:
+  push:
+    paths:
+    - 'thea-ui/**'
+
+jobs:
+
+  ui-tests:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install npm dependencies
+      run: npm install --verbose
+      working-directory: ./thea-ui
+    
+    - name: Run linter
+      run: npm run lint
+      working-directory: ./thea-ui  
+
+    - name: Run ng test
+      run: npm test
+      working-directory: ./thea-ui
