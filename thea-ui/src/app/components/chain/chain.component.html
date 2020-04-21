@@ -1,2 +1,8 @@
-<h2>Certificate Chain</h2>
-<app-certificate-chain></app-certificate-chain>
+<div><h2>Certificate Chain</h2>
+<div class="d-flex flex-row-reverse" *ngIf="chain">
+    <button class="btn btn-info btn-lg float-right" type="submit" (click)="reinspect()">Reinspect</button>
+</div>
+<div class="alert alert-danger" *ngIf="error">
+    <strong>Warning!</strong> {{error}}
+</div>
+<app-certificate-chain [chain]="chain"></app-certificate-chain>
