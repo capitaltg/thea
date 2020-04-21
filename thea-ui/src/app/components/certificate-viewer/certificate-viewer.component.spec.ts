@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { CertificateViewerComponent } from './certificate-viewer.component';
+import { CertificateComponent } from '../certificate/certificate.component';
 
 describe('CertificateViewerComponent', () => {
   let component: CertificateViewerComponent;
@@ -8,7 +11,13 @@ describe('CertificateViewerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CertificateViewerComponent ]
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
+      declarations: [ 
+        CertificateViewerComponent, 
+        CertificateComponent ]
     })
     .compileComponents();
   }));

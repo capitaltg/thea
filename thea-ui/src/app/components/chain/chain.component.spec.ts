@@ -1,20 +1,32 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { CheckComponent } from './check.component';
+import { ChainComponent } from './chain.component';
+import { CertificateChainComponent } from '../certificate-chain/certificate-chain.component';
+import { CertificateComponent } from '../certificate/certificate.component';
 
-describe('CheckComponent', () => {
-  let component: CheckComponent;
-  let fixture: ComponentFixture<CheckComponent>;
+describe('ChainComponent', () => {
+  let component: ChainComponent;
+  let fixture: ComponentFixture<ChainComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CheckComponent ]
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
+      declarations: [ 
+        ChainComponent,
+        CertificateChainComponent,
+        CertificateComponent
+       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CheckComponent);
+    fixture = TestBed.createComponent(ChainComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
