@@ -16,7 +16,7 @@ describe('ChainComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule
       ],
-      declarations: [ 
+      declarations: [
         ChainComponent,
         CertificateChainComponent,
         CertificateComponent
