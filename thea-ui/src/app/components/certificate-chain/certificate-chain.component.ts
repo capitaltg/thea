@@ -1,7 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
-import { CertificateService } from '../../../app/services';
+import { Component, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-certificate-chain',
@@ -11,17 +8,9 @@ export class CertificateChainComponent implements OnInit {
 
   @Input() chain: any;
 
-  constructor(
-    private certificateService: CertificateService,
-    private route: ActivatedRoute,
-  ) { }
+  constructor() { }
 
-  ngOnInit() {
-    const certificateChainId = this.route.snapshot.paramMap.get('certificateChainId');
-    if (certificateChainId) {
-      this.certificateService.getCertificateChain(certificateChainId).subscribe ( response => this.chain = response );
-    }
-  }
+  ngOnInit() { }
 
   getWarnings(certificates: any[]) {
     return certificates.map(certificate => certificate.warnings).reduce( (list, value) => list.concat(value), [] );
