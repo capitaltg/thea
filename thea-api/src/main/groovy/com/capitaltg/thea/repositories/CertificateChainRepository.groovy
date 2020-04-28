@@ -32,8 +32,7 @@ order by hostname
   List<CertificateChain> findRecent()
 
   @Query(value='''
-SELECT * FROM CertificateChain WHERE hostname = :hostname AND timestamp NOT IN
-(SELECT max(timestamp) FROM CertificateChain WHERE hostname = :hostname)
+SELECT * FROM CertificateChain WHERE hostname = :hostname
 ORDER BY timestamp DESC limit 10
 ''', nativeQuery=true)
   List<CertificateChain> findHistorical(@Param('hostname') String hostname)
