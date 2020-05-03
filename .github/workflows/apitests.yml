@@ -1,0 +1,21 @@
+name: Java CI with Gradle
+
+on: [push]
+
+jobs:
+
+  api-tests:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Java 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+
+    - name: Run Gradle test and check
+      run: ./gradlew -x :thea-ui:buildAngular test check
+      working-directory: ./thea-api
+
