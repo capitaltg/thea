@@ -4,6 +4,7 @@ export { CallbackComponent } from './callback/callback.component';
 export { ChainComponent } from './chain/chain.component';
 export { CertificateComponent } from './certificate/certificate.component';
 export { CertificateViewerComponent } from './certificate-viewer/certificate-viewer.component';
+export { HistoryComponent } from './history/history.component';
 export { HomeComponent } from './home/home.component';
 export { ProfileComponent } from './profile/profile.component';
 export { RecentComponent } from './recent/recent.component';

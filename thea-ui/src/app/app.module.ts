@@ -14,6 +14,7 @@ import {
   AppNavbarComponent,
   CertificateComponent,
   ChainComponent,
+  HistoryComponent,
   HomeComponent,
   ProfileComponent,
   RecentComponent,
@@ -40,6 +41,7 @@ import { CertificateChainComponent } from './components/certificate-chain/certif
     CertificateChainComponent,
     ChainComponent,
     TrustedComponent,
+    HistoryComponent,
     HomeComponent,
   ],
   imports: [

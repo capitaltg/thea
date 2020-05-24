@@ -32,6 +32,14 @@ class CertificateChainController {
     return certificateService.getCertificateChainById(id)
   }
 
+  @GetMapping('/historical/{hostname}')
+  List<CertificateChain> getCertificateChain(@PathVariable String hostname) {
+    LOGGER.info("Getting certificate chains for $hostname")
+    def historicalChains = certificateChainRepository.findHistorical(hostname)
+    LOGGER.info("Found $historicalChains.size historical chains")
+    return historicalChains
+  }
+
   @GetMapping('/recent')
   List<CertificateChain> getRecentCertificateChains() {
     LOGGER.info('Getting recent certificate chains')

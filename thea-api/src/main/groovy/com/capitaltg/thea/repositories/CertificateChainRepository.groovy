@@ -31,4 +31,10 @@ order by hostname
     nativeQuery=true)
   List<CertificateChain> findRecent()
 
+  @Query(value='''
+SELECT * FROM CertificateChain WHERE hostname = :hostname
+ORDER BY timestamp DESC limit 10
+''', nativeQuery=true)
+  List<CertificateChain> findHistorical(@Param('hostname') String hostname)
+
 }

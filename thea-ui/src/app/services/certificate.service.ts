@@ -41,4 +41,8 @@ export class CertificateService {
     return this.http.get<any>(`${environment.apiEndpoint}/chains/recent?page=${page}`);
   }
 
+  getCertificateChainsByHostname(hostname: string) {
+    return this.http.get<any>(`${environment.apiEndpoint}/chains/historical/${hostname}`);
+  }
+
 }
