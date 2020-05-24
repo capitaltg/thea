@@ -1,0 +1,16 @@
+<h2>Certificate Chain History</h2>
+<h4>{{hostname}}</h4>
+
+<div *ngIf="historicalChains">
+    <div *ngIf="historicalChains?.length > 0; else noResultsMessage">
+      <ul class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let histChain of historicalChains" >
+          <a routerLink="/chain/{{histChain?.certificateChainId}}">{{histChain?.timestamp|date:'medium'}}</a>
+          <span *ngIf="histChain.success" class="badge badge-success">Success</span>
+          <span *ngIf="!histChain.success" class="badge badge-warning">Warnings</span>
+        </li>
+      </ul>
+    </div>
+    <ng-template #noResultsMessage>(No results)</ng-template>
+  </div>
+  
