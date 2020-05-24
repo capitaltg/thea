@@ -202,13 +202,13 @@ class CertificateService {
   List<Certificate> searchCertificates(Map map) {
     def sql = '''from Certificate order by commonName'''
     def session = sessionFactory.openSession()
-    
-	def clauses = map.collect { k, v ->
-		if (k.toString().toLowerCase() == "subjectdn") {
-			"( upper($k) like :$k OR upper(subjectAlternativeNames) like cast(:$k as string) )"
-		} else {
-			"upper($k) like :$k"
-		} 
+
+    def clauses = map.collect { k, v ->
+      if (k.toString().toLowerCase() == 'subjectdn') {
+        "( upper($k) like :$k OR upper(subjectAlternativeNames) like cast(:$k as string) )"
+      } else {
+        "upper($k) like :$k"
+      }
     }
     def whereClause = clauses.join(' AND ')
     if (clauses) {

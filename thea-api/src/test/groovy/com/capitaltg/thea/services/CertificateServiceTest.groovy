@@ -32,8 +32,8 @@ class CertificateServiceTest {
   @Test
   void searchCertificates() {
     def certificates = certificateService.searchCertificates([subjectDn:'baltimore'])
-    assert certificates.size() == 1
-    assert certificates[0].serialNumber == '20000B9'
+    assert certificates.size() == 2
+    assert certificates[0].serialNumber == '20000BF'
   }
 
   @Test
