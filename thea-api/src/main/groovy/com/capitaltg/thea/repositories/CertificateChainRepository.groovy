@@ -13,17 +13,20 @@ interface CertificateChainRepository extends PagingAndSortingRepository <Certifi
   JpaSpecificationExecutor<CertificateChain> {
 
   List<CertificateChain> findByHostname(String hostname)
+
   @Query(value='''
-select distinct chain.hostname from
-  CertificateChain chain
-    join CertificateChain_Certificate ccc
-    on chain.certificateChainId = ccc.CertificateChain_certificateChainId
-  join Certificate certificate
-    on certificate.certificateId = ccc.certificates_certificateId
-where certificate.sha256 = :sha256
-order by hostname
-''', nativeQuery=true)
-  List<String> findForCertificate(@Param('sha256') String sha256)
+select
+  max(chain.certificateChainId) as certificateChainId,
+  chain.hostname as hostname,
+  max(chain.timestamp) as timestamp
+from CertificateChain as chain
+join chain.certificates as certificates
+where
+  certificates.sha256 = :sha256 and
+  chain.hideResult = false
+group by chain.hostname
+''')
+  List<CertificateChain> findForCertificate(@Param('sha256') String sha256)
 
   @Query(value='''SELECT * FROM CertificateChain AS T1 WHERE hideResult=false and NOT EXISTS (
     SELECT * FROM CertificateChain AS T2 WHERE T2.hostname = T1.hostname AND T2.timestamp > T1.timestamp)

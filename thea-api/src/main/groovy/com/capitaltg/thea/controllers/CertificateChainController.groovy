@@ -51,7 +51,8 @@ class CertificateChainController {
   @GetMapping('/includes/{sha256}')
   List<CertificateChain> getCertificateChainsForCertificate(@PathVariable String sha256) {
     LOGGER.info("Getting certificate chains for $sha256")
-    return certificateChainRepository.findForCertificate(sha256)
+    return certificateChainRepository.findForCertificate(sha256).collect { row ->
+      new CertificateChain(certificateChainId: row[0], hostname: row[1], timestamp: row[2]) }
   }
 
   @PostMapping
