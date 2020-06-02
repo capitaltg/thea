@@ -91,9 +91,7 @@
     <li class="list-group-item" *ngFor="let chain of chains">
       <div class="row">
           <div class="col-sm-10 font-weight-bold">
-              <a routerLink="/home" [queryParams]="{hostname: chain}" >
-                {{chain}}
-              </a>
+              <a routerLink="/chain/{{chain.certificateChainId}}">{{chain.hostname}}</a>
           </div>
       </div>
     </li>
