@@ -26,7 +26,7 @@ class CertificateServiceTest {
     def certificateChain = certificateService.checkCertificateChain(hostname)
     assert !certificateChain.success
     assert certificateChain.hostname == hostname
-    assert certificateChain.warnings == ['No subject alternative DNS name matching localhost found.']
+    assert certificateChain.warnings.contains('No subject alternative DNS name matching localhost found.')
     server.stop()
   }
 
