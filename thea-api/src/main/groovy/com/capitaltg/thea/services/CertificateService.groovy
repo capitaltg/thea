@@ -23,6 +23,7 @@ import java.security.cert.PKIXBuilderParameters
 import java.security.cert.PKIXRevocationChecker
 import java.security.cert.TrustAnchor
 import java.security.cert.X509CertSelector
+import java.time.LocalDateTime
 
 import javax.annotation.PostConstruct
 
@@ -153,22 +154,52 @@ class CertificateService {
   }
 
   List<Certificate> getCertificateChain(String sha256) {
-    def list = []
+    // TODO can probably use some cleanup
     def certificate = certificateRepository.findBySha256(sha256)
     Preconditions.checkNotNull(certificate, "Certificate with SHA256 hash $sha256 does not exist")
-    def authorityKeyIdentifier = certificate.authorityKeyIdentifier
-    while (authorityKeyIdentifier) {
-      def certificates = certificateRepository.findBySubjectKeyIdentifier(authorityKeyIdentifier)
-      certificate = certificates.sort { c1, c2 -> c2.authorityKeyIdentifier <=> c1.authorityKeyIdentifier }.first()
-      if (certificate.authorityKeyIdentifier &&
-        certificate.authorityKeyIdentifier != certificate.subjectKeyIdentifier) {
-        list.push(certificate)
-        authorityKeyIdentifier = certificate.authorityKeyIdentifier
-      } else {
-        authorityKeyIdentifier = null
+
+    def listOfChains = [[ certificate ]]
+    def addedCerts = true
+
+    // build all possible, unexpired chains
+    while (addedCerts) {
+      addedCerts = false
+      def newListOfChains = []
+      listOfChains.each { chain ->
+        def lastCertificate = chain.last()
+        if (lastCertificate.authorityKeyIdentifier &&
+          lastCertificate.authorityKeyIdentifier != lastCertificate.subjectKeyIdentifier) {
+          def authorities = certificateRepository.findBySubjectKeyIdentifier(lastCertificate.authorityKeyIdentifier)
+          authorities
+            // remove expired certificates from consideration
+            .findAll { it.notAfter > LocalDateTime.now() }
+            .each { authority ->
+              newListOfChains.push(chain + authority)
+              addedCerts = true
+            }
+          } else {
+          newListOfChains.push(chain)
+          }
       }
+      listOfChains = newListOfChains
     }
-    return list
+
+    // sort by length and return the longest one
+    listOfChains.sort { c1, c2 -> c1.size() <=> c2.size() }
+    def chain = listOfChains.last()
+    chain.remove(0)
+
+    // remove the first certificate (original) and last (if a trust anchor)
+    def last = chain.size()
+    if (last == 0) {
+      return chain
+    }
+    def lastCertificate = chain.last()
+    if (!lastCertificate.authorityKeyIdentifier ||
+          lastCertificate.authorityKeyIdentifier == lastCertificate.subjectKeyIdentifier) {
+      last = last - 1
+    }
+    return chain.subList(0, last)
   }
 
   List<Certificate> getSimilarCertificates(String sha256) {
@@ -227,6 +258,18 @@ class CertificateService {
   List<Certificate> getTrustedAnchorCertificates() {
     def list = trustAnchorManager.allTrustedAnchors.collect { new Certificate(it) }
     return list.sort { c1, c2 -> c1.subjectDn <=> c2.subjectDn }
+  }
+
+  void saveCertificate(Certificate certificate) {
+    def session = sessionFactory.openSession()
+    try {
+      def existing = session.bySimpleNaturalId(Certificate).load(certificate.sha256)
+      if (!existing) {
+        session.save(certificate)
+      }
+    } finally {
+      session.close()
+    }
   }
 
   @PostConstruct

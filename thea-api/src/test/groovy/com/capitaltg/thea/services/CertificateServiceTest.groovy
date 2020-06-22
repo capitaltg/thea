@@ -11,6 +11,8 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
+import com.capitaltg.thea.objects.Certificate
+import com.capitaltg.thea.util.CertificateUtil
 
 @RunWith(SpringRunner)
 @SpringBootTest
@@ -84,6 +86,21 @@ class CertificateServiceTest {
       .getCertificateChain('C9C93A25D2142ED75E138D1CA12EBD00BBBCEF8905CADB572823015294BAB497')
     assert certificates.size() == 1
     server.stop()
+  }
+
+  @Test
+  void getBestCertificateChain() {
+    def list = ['COMODO_RSA_CA_expired.cer', 'datausa.io.cer', 'COMODO_RSA.cer', 'COMODO_RSA_CA.cer',
+      'COMODO_RSA_CA_cross_signed.cer']
+    list.each { name ->
+      def certificate = new Certificate(CertificateUtil.loadCertificate(name))
+      certificateService.saveCertificate(certificate)
+    }
+    def certificates = certificateService
+      .getCertificateChain('520A98441167C5E66B29AEC787C71034D5311FE89819849AC30C68CD6F27DB4B')
+    assert certificates.size() == 2
+    def last = certificates.last()
+    assert last.serialNumber == '67DEF43EF17BDAE24FF5940606D2C084'
   }
 
   @Test
