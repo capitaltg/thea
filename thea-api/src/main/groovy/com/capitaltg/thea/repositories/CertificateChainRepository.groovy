@@ -35,7 +35,10 @@ group by chain.hostname
   List<CertificateChain> findRecent()
 
   @Query(value='''
-SELECT * FROM CertificateChain WHERE hostname = :hostname
+SELECT * FROM CertificateChain
+WHERE
+  hostname = :hostname and
+  hideResult = false
 ORDER BY timestamp DESC limit 10
 ''', nativeQuery=true)
   List<CertificateChain> findHistorical(@Param('hostname') String hostname)
