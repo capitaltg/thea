@@ -18,7 +18,7 @@ WORKDIR /home/gradle/
 RUN gradle clean build -x :thea-ui:buildAngular
 
 # Create runtime image
-FROM adoptopenjdk/openjdk11:jre-11.0.7_10-alpine
+FROM adoptopenjdk/openjdk11:jre-11.0.9_11-alpine
 
 RUN adduser -D ctg
 RUN mkdir /opt/ctg
