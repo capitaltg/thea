@@ -29,7 +29,7 @@ dependencies {
   compile 'io.lettuce:lettuce-core:5.1.8.RELEASE'
 
   compile 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.6.RELEASE'
-  compile 'org.codehaus.groovy:groovy-all:2.4.14'
+  compile 'org.codehaus.groovy:groovy-all:3.0.6'
   compile 'mysql:mysql-connector-java:6.0.6'
   compile 'io.springfox:springfox-swagger2:2.9.2'
   compile 'io.springfox:springfox-swagger-ui:2.9.2'
