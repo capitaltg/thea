@@ -61,6 +61,24 @@
           [queryParams]="{filters: 'subjectKeyIdentifier:'+certificate.authorityKeyIdentifier}">&nbsp;(find)</a></div>
     </div>
   </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-2 font-weight-bold">PEM Format <a type="button" style="color:#18BC9C" (click)="collapsed = !collapsed">(toggle)</a></div>
+    </div>
+    <div class="row" id="navbarColor01" [ngbCollapse]="collapsed">
+      <div class="col-sm-12">
+        <code>
+          -----BEGIN CERTIFICATE-----
+          </code><br>
+          <code>
+            {{certificate.base64Encoding}}
+          </code><br>
+          <code>
+          -----END CERTIFICATE-----
+          </code>
+      </div>
+    </div>
+  </li>
 </ul>
 <br>
 
