@@ -50,7 +50,7 @@ class CertificateController {
     def certificate = certificateService.getCertificate(sha256)
     HttpHeaders headers = new HttpHeaders()
     headers.setContentType(MediaType.APPLICATION_OCTET_STREAM)
-    response.setHeader('Content-Disposition', """attachment; filename= "${certificate.subjectDn}.cer" """)
+    response.setHeader('Content-Disposition', """attachment; filename= "${certificate.commonName}.cer" """)
     def string = """-----BEGIN CERTIFICATE-----
 ${certificate.base64Encoding}
 -----END CERTIFICATE-----"""

@@ -12,6 +12,7 @@ export class CertificateComponent implements OnInit {
   @Input() certificate: any;
   @Input() index: number;
 
+  public collapsed = true;
   similar: any[];
   chains: any[];
 
