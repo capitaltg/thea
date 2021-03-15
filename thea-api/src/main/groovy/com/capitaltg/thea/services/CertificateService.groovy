@@ -184,8 +184,14 @@ class CertificateService {
       listOfChains = newListOfChains
     }
 
+    def trustedSkis = getTrustedAnchorCertificates()*.subjectKeyIdentifier
+
+    // only consider chains that are anchored by trusted anchors
     // sort by length and return the longest one
-    listOfChains.sort { c1, c2 -> c1.size() <=> c2.size() }
+    listOfChains = listOfChains
+      .findAll { it.last().subjectKeyIdentifier in trustedSkis }
+      .sort { c1, c2 -> c1.size() <=> c2.size() }
+
     def chain = listOfChains.last()
     chain.remove(0)
 
