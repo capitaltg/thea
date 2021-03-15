@@ -184,8 +184,14 @@ class CertificateService {
       listOfChains = newListOfChains
     }
 
+    def trustedSkis = getTrustedAnchorCertificates()*.subjectKeyIdentifier
+
+    // only consider chains that are anchored by trusted anchors
     // sort by length and return the longest one
-    listOfChains.sort { c1, c2 -> c1.size() <=> c2.size() }
+    listOfChains = listOfChains
+      .findAll { it.last().subjectKeyIdentifier in trustedSkis }
+      .sort { c1, c2 -> c1.size() <=> c2.size() }
+
     def chain = listOfChains.last()
     chain.remove(0)
 
@@ -274,19 +280,17 @@ class CertificateService {
 
   @PostConstruct
   def storeTrustAnchorCertificates() {
-    def session = sessionFactory.openSession()
-    try {
-      // TODO untrust all and re-establish trusted certs
-      trustAnchorManager.allTrustedAnchors.each {
-        def certificate = new Certificate(it)
+    certificateRepository.untrustAll()
+    trustAnchorManager.allTrustedAnchors.each {
+      def certificate = new Certificate(it)
+      def existing = getCertificate(certificate.sha256)
+      if (existing) {
+        existing.trusted = true
+        certificateRepository.save(existing)
+      } else {
         certificate.trusted = true
-        def existing = session.bySimpleNaturalId(Certificate).load(certificate.sha256)
-        if (!existing) {
-          session.save(certificate)
-        }
+        certificateRepository.save(certificate)
       }
-    } finally {
-      session.close()
     }
   }
 

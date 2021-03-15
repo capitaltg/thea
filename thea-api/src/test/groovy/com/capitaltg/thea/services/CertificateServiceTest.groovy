@@ -91,13 +91,14 @@ class CertificateServiceTest {
   @Test
   void getBestCertificateChain() {
     def list = ['COMODO_RSA_CA_expired.cer', 'datausa.io.cer', 'COMODO_RSA.cer', 'COMODO_RSA_CA.cer',
-      'COMODO_RSA_CA_cross_signed.cer']
+      'COMODO_RSA_CA_cross_signed.cer', 'comodo-cross.cer']
     list.each { name ->
       def certificate = new Certificate(CertificateUtil.loadCertificate(name))
       certificateService.saveCertificate(certificate)
     }
     def certificates = certificateService
       .getCertificateChain('520A98441167C5E66B29AEC787C71034D5311FE89819849AC30C68CD6F27DB4B')
+
     assert certificates.size() == 2
     def last = certificates.last()
     assert last.serialNumber == '67DEF43EF17BDAE24FF5940606D2C084'
