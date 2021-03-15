@@ -62,5 +62,5 @@ compileJava.dependsOn(processResources)
 
 codenarc {
   toolVersion = '1.3'
-  reportFormat = 'html'
+  reportFormat = 'console'
 }
