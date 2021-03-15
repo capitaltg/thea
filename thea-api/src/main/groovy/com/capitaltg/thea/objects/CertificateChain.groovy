@@ -2,7 +2,7 @@ package com.capitaltg.thea.objects
 
 import com.capitaltg.thea.util.ListSerializer
 
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 
 import javax.persistence.CascadeType
 import javax.persistence.Column
@@ -22,7 +22,7 @@ class CertificateChain {
   @Column(unique = true, nullable = false)
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long certificateChainId
-  LocalDateTime timestamp = LocalDateTime.now()
+  ZonedDateTime timestamp = ZonedDateTime.now()
   String hostname
 
   @Column(length = 4000)
