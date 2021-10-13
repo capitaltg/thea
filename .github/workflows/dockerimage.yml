@@ -1,0 +1,28 @@
+name: Build and Push API Docker Image
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build the Docker image
+        run: |
+          # Build a docker container and push it to ECR
+          docker build . -t public.ecr.aws/capitaltg/thea:latest
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          # Login to ecr-public
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
+          # Build a docker container and push it to ECR
+          docker push public.ecr.aws/capitaltg/thea:latest
