@@ -24,8 +24,7 @@ UI design components use [Bootstrap](https://getbootstrap.com) with the Flatly t
 To get Certificate Checker up and running quickly with [Docker](https://www.docker.com/), you can run:
 
 ```
-docker pull capitaltg/thea
-docker run -it -p 8080:8080 capitaltg/thea
+docker run -it -p 8080:8080 public.ecr.aws/capitaltg/thea
 ```
 
 Then, point your browser to http://localhost:8080. This command will run Certificate Checker using an embedded h2 database.  You can also run Certificate Checker with a real database connection. For a MySQL database, you can use the following syntax: 
