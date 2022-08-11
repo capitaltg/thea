@@ -23,7 +23,6 @@ dependencies {
   implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
   implementation "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
   implementation "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
-  implementation 'io.lettuce:lettuce-core:5.1.8.RELEASE'
 
   implementation "org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:$springBootVersion"
   implementation 'org.codehaus.groovy:groovy-all:3.0.6'
