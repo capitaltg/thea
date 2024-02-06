@@ -1,0 +1,38 @@
+<h2>Trusted Root Anchor Certificates</h2>
+<p class="lead">
+    The following certificates have been configured as Trust Anchors. See project <a href="https://github.com/capitaltg/thea">README</a>
+    for details how to configure your own set of Trust Anchors.
+</p>
+
+<div class="d-flex justify-content-center" *ngIf="!trusted">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<ul class="list-group" *ngIf="trusted">
+    <li class="list-group-item show active">
+        <div class="row">
+            <div class="col-sm-8 font-weight-bold">Subject DN</div>
+            <div class="col-sm-2 font-weight-bold">Valid From</div>
+            <div class="col-sm-2 font-weight-bold">Valid To</div>
+        </div>
+    </li>
+    <li class="list-group-item" *ngFor="let certificate of trusted">
+        <div class="row">
+          <div class="col-sm-8">
+              <a routerLink="/certificate/{{certificate.sha256}}">{{ certificate.subjectDn }}</a>
+              &#160;<span *ngIf="isExpired(certificate.notAfter)" class="badge badge-danger float">Expired</span>
+          </div>
+          <div class="col-sm-2">
+              <time datetime='certificate.notBefore'
+              title="{{certificate.notBefore | date:'long'}}">{{certificate.notBefore | date:'mediumDate'}}</time>
+          </div>
+          <div class="col-sm-2">
+              <time datetime='certificate.notAfter'
+              title="{{certificate.notAfter | date:'long'}}">{{certificate.notAfter | date:'mediumDate'}}</time>
+          </div>
+        </div>
+    </li>
+</ul>
+<br>

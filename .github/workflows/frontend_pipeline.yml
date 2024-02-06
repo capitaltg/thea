@@ -1,0 +1,30 @@
+name: Frontend Image Build and Deploy Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    paths: ["thea-ui/**"]
+
+defaults:
+  run:
+    working-directory: thea-ui
+
+env:
+  ECR_REPOSITORY: thea-ui
+
+jobs:
+  frontend_build_test_pipeline:
+    name: Run tests and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "8.17.0"
+          cache: "npm"
+          cache-dependency-path: "thea-ui/package-lock.json"
+      - name: Install dependencies
+        run: npm install        
+      - name: Run build
+        run: npm run ng build -- --aot --output-hashing all --extract-css true --build-optimizer --vendor-chunk

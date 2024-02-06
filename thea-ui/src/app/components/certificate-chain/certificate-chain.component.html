@@ -1,0 +1,18 @@
+<div>
+  <div *ngIf="chain" class="text-info">Inspected {{chain.hostname}} at {{chain?.timestamp|date:'medium'}}</div>
+  <div class="alert alert-warning" *ngIf="chain?.warnings?.length > 1">
+    <strong>Warning!</strong>
+    <div *ngFor="let warning of chain?.warnings">- {{warning}}</div>
+  </div>
+  <div class="alert alert-warning"  *ngIf="chain?.warnings?.length == 1">
+    <strong>Warning!</strong> {{chain?.warnings[0]}}
+  </div>
+  <div class="alert alert-dismissible alert-success"
+    *ngIf="chain && chain?.warnings?.length==0 && getWarnings(chain?.certificates)?.length==0">
+    The certificate chain for <strong>{{chain?.hostname}}</strong> is properly configured - yay!
+    It contains the server certificate and {{chain?.certificates.length - 1}} additional certificates.
+  </div>
+  <div *ngFor="let certificate of chain?.certificates; let i = index" [attr.data-index]="i">
+    <app-certificate [certificate]="certificate" [index]="i"></app-certificate>
+  </div>
+</div>

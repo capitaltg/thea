@@ -1,0 +1,117 @@
+<ul class="list-group">
+  <li routerLink="/certificate/{{certificate.sha256}}" class="list-group-item show active">Certificate
+    {{index > -1 ? index+1 : ''}}
+    &nbsp;<span *ngFor="let warning of certificate.warnings" class="badge badge-danger float">{{warning}}</span>
+    &nbsp;<span *ngIf="certificate.trusted" class="badge badge-info float">Trusted anchor certificate</span>
+    <div *ngIf="index > -1" class="float-right"><a routerLink="/certificate/{{certificate.sha256}}">View</a></div>
+  </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-2 font-weight-bold">Subject DN</div>
+      <div class="col-sm-10">{{certificate.subjectDn}}</div>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-2 font-weight-bold">Issuer DN</div>
+      <div class="col-sm-10">{{certificate.issuerDn}}</div>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-2 font-weight-bold">Serial Number</div>
+      <div class="col-sm-10"><code>{{certificate.serialNumber}}</code></div>
+    </div>
+  </li>
+  <li class="list-group-item" *ngIf="certificate.subjectAlternativeNames.length > 0">
+    <div class="row">
+      <div class="col-sm-2 font-weight-bold">SANs</div>
+      <div class="col-sm-10">{{certificate.subjectAlternativeNames.join(', ')}}</div>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-2 font-weight-bold">Valid</div>
+      <div class="col-sm-4"><time datetime='certificate.notBefore'
+          title="{{certificate.notBefore | date:'long'}}">{{certificate.notBefore | date:'longDate'}}</time>
+        to
+        <span [ngClass]="{'text-danger': isExpired(certificate.notAfter)}"><time datetime='certificate.notAfter'
+            title="{{certificate.notAfter | date:'long'}}">{{certificate.notAfter | date:'longDate'}}</time></span>
+      </div>
+      <div class="col-sm-2 font-weight-bold">Key</div>
+      <div class="col-sm-4">{{certificate.keyType}} ({{certificate.keyLength}} bit)</div>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-2 font-weight-bold">SHA1 Hash</div>
+      <div class="col-sm-4"><code>{{certificate.sha1}}</code></div>
+      <div class="col-sm-2 font-weight-bold">MD5 Hash</div>
+      <div class="col-sm-4"><code>{{certificate.md5}}</code></div>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-2 font-weight-bold">SKI</div>
+      <div class="col-sm-4"><code>{{certificate.subjectKeyIdentifier}}</code></div>
+      <div class="col-sm-2 font-weight-bold">AKI</div>
+      <div class="col-sm-4"><code>{{certificate.authorityKeyIdentifier}}</code>
+        <a *ngIf="certificate.authorityKeyIdentifier && certificate.authorityKeyIdentifier != certificate.subjectKeyIdentifier"
+          routerLink="/search"
+          [queryParams]="{filters: 'subjectKeyIdentifier:'+certificate.authorityKeyIdentifier}">&nbsp;(find)</a></div>
+    </div>
+  </li>
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-sm-2 font-weight-bold">PEM Format <a type="button" style="color:#18BC9C" (click)="collapsed = !collapsed">(toggle)</a></div>
+    </div>
+    <div class="row" id="navbarColor01" [ngbCollapse]="collapsed">
+      <div class="col-sm-12">
+        <code>
+          -----BEGIN CERTIFICATE-----
+          </code><br>
+          <code>
+            {{certificate.base64Encoding}}
+          </code><br>
+          <code>
+          -----END CERTIFICATE-----
+          </code>
+      </div>
+    </div>
+  </li>
+</ul>
+<br>
+
+<div *ngIf="similar?.length > 0">
+  <ul class="list-group">
+      <li class="list-group-item show active">Certificates that Share Same Key Pair</li>
+      <li class="list-group-item" *ngFor="let simCertificate of similar">
+          <div class="row">
+            <div class="col-sm-2 font-weight-bold">Common Name</div>
+            <div class="col-sm-4"><a
+              routerLink="/certificate/{{simCertificate.sha256}}">{{simCertificate.commonName ? simCertificate.commonName : '(empty)'}}</a></div>
+            <div class="col-sm-2 font-weight-bold">Serial Number</div>
+            <div class="col-sm-4"><code>{{simCertificate.serialNumber}}</code></div>
+            <div class="col-sm-2 font-weight-bold">Valid To</div>
+            <div class="col-sm-4"><time datetime='simCertificate.notAfter'
+              title="{{simCertificate.notAfter | date:'long'}}">{{simCertificate.notAfter | date:'mediumDate'}}</time></div>
+            <div class="col-sm-2 font-weight-bold">SHA-1 Digest</div>
+            <div class="col-sm-4"><code>{{simCertificate.sha1}}</code></div>
+          </div>
+      </li>
+  </ul>
+  <br>
+</div>
+
+<div *ngIf="chains?.length > 0">
+  <ul class="list-group">
+    <li class="list-group-item show active">Certificate Chains Containing this Certificate</li>
+    <li class="list-group-item" *ngFor="let chain of chains">
+      <div class="row">
+          <div class="col-sm-10 font-weight-bold">
+              <a routerLink="/chain/{{chain.certificateChainId}}">{{chain.hostname}}</a>
+          </div>
+      </div>
+    </li>
+  </ul>
+</div>

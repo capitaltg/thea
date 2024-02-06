@@ -1,0 +1,73 @@
+name: Build Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "8.17.0"
+          cache: "npm"
+          cache-dependency-path: "thea-ui/package-lock.json"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+ 
+      - name: Build UI
+        run: |
+          cd thea-ui
+          npm install        
+          npm run ng build -- --aot --output-hashing all --extract-css true --build-optimizer --vendor-chunk
+  
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "gradle"
+  
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1.1.0
+  
+      - name: Build Docker Image
+        run: |
+          ls -l
+          mv thea-ui/dist/static thea-ui/static
+          mv thea-ui/static thea-api/src/main/resources/
+          cd thea-api
+          ./gradlew bootjar --no-daemon
+          docker build . -t public.ecr.aws/capitaltg/thea:latest
+
+      - name: Scan for vulnerabilities
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: public.ecr.aws/capitaltg/thea:latest
+          format: "table"
+          exit-code: "1"
+          ignore-unfixed: true
+          vuln-type: "os,library"
+          severity: "HIGH,CRITICAL"
+          scanners: "vuln"
+        env:
+          TRIVY_OFFLINE_SCAN: true
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+        with:
+          registry-type: public
+
+      - name: Push image to Amazon ECR
+        run: docker push public.ecr.aws/capitaltg/thea:latest

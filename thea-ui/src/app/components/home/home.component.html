@@ -1,0 +1,36 @@
+<h2>Inspect TLS Endpoint</h2>
+
+<form (ngSubmit)="redirect()">
+    <fieldset>
+        <div class="form-group">
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input type="text" class="form-control" id="url" placeholder="example.com" [(ngModel)]="hostname"
+                        autofocus name="hostname">
+                    <button type="submit" class="btn btn-default btn-outline-primary ml-1">Inspect</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="hideResult" name="hideResult" [(ngModel)]="hideResult"
+                    [checked]="hideResult">
+                    <label class="custom-control-label" for="hideResult">Do not show in results</label>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+<div class="d-flex justify-content-center" *ngIf="searching">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<div class="alert alert-danger" *ngIf="error">
+    <strong>Warning!</strong> {{error}}
+</div>
+
+<app-certificate-chain [chain]="chain"></app-certificate-chain>
+
+<app-recent *ngIf="!chain && !searching"></app-recent>
+<br>

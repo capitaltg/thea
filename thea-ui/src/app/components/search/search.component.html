@@ -1,0 +1,60 @@
+<h2>Search Certificates</h2>
+<form>
+  <div class="row">
+    <div class="col-md-3 mb-3">
+      <label for="subject">Subject</label>
+      <input name="subjectDn" type="text" class="form-control"
+        [(ngModel)]="filters.subjectDn"
+        #text="ngModel"/>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="issuer">Issuer</label>
+      <input name="issuerDn" type="text" class="form-control"
+        [(ngModel)]="filters.issuerDn"
+        #text="ngModel"/>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="serialNumber">Serial Number</label>
+      <input name="serialNumber" type="text" class="form-control"
+        [(ngModel)]="filters.serialNumber"
+        #text="ngModel"/>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="subjectKeyIdentifier">Subject Key Identifier</label>
+      <input name="subjectKeyIdentifier" type="text" class="form-control"
+        [(ngModel)]="filters.subjectKeyIdentifier"
+        #text="ngModel"/>
+    </div>
+  </div>
+  <button class="btn btn-info btn-lg btn-block" type="submit" (click)="search()">Search</button>
+  <hr class="mb-4">
+
+
+  <ul class="list-group">
+      <li class="list-group-item show active">
+          <div class="row">
+              <div class="col-sm-2 font-weight-bold">Common Name</div>
+              <div class="col-sm-4 font-weight-bold">Serial Number</div>
+              <div class="col-sm-4 font-weight-bold">SHA-1 Digest</div>
+              <div class="col-sm-2 font-weight-bold">Valid To</div>
+          </div>
+      </li>
+      <li class="list-group-item" *ngFor="let certificate of certificates">
+          <div class="row">
+            <div class="col-sm-2">
+                <a routerLink="/certificate/{{certificate.sha256}}">{{certificate.commonName ? certificate.commonName : '(empty)'}}</a>
+            </div>
+            <div class="col-sm-4">
+                <code>{{certificate.serialNumber}}</code>
+            </div>
+            <div class="col-sm-4">
+                <code>{{certificate.sha1}}</code>
+            </div>
+            <div class="col-sm-2">
+                <time datetime='certificate.notAfter' title="{{certificate.notAfter | date:'long'}}">{{certificate.notAfter | date:'mediumDate'}}</time>
+            </div>
+          </div>
+      </li>
+  </ul>
+  <br>
+</form>
