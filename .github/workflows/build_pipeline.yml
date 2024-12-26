@@ -39,7 +39,7 @@ jobs:
           cache: "gradle"
   
       - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@v1.1.0
+        uses: gradle/wrapper-validation-action@v3
   
       - name: Build Docker Image
         run: |
