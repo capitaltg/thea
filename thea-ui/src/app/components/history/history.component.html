@@ -9,8 +9,8 @@
           <a routerLink="/chain/{{histChain?.certificateChainId}}">{{histChain?.timestamp|date:'medium'}}</a>
           <code>{{histChain.certificates[0].serialNumber}}</code>
           <div>Expires <time datetime='certificate.notAfter' title="{{histChain.certificates[0].notAfter | date:'long'}}">{{histChain.certificates[0].notAfter | date:'mediumDate'}}</time></div>
-          <span *ngIf="histChain.success" class="badge badge-success">Success</span>
-          <span *ngIf="!histChain.success" class="badge badge-warning">Warnings</span>
+          <span *ngIf="histChain.success" class="badge bg-success">Success</span>
+          <span *ngIf="!histChain.success" class="badge bg-warning">Warnings</span>
         </li>
       </ul>
     </div>

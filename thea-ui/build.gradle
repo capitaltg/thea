@@ -5,7 +5,7 @@ task buildAngular(type: Exec) {
   if (System.getProperty('os.name').toUpperCase().contains('WINDOWS')) {
     commandLine 'ng.cmd', 'build', '--configuration=production', '--prod'
   } else {
-    commandLine 'npm', 'run', 'ng', 'build', '--', '--aot', '--output-hashing', 'all', '--extract-css', 'true', '--build-optimizer', '--vendor-chunk'
+    commandLine 'npm', 'run', 'ng', 'build', '--', '--aot', '--output-hashing', 'all', '--build-optimizer', '--vendor-chunk'
   }
 }
 

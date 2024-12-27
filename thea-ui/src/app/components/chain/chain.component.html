@@ -1,12 +1,14 @@
-<div class="float-right" *ngIf="chain">
-  <button class="btn btn-outline-primary" routerLink="/{{chain.hostname}}/history">History</button>&nbsp;
-  <button class="btn btn-outline-primary" type="submit" (click)="reinspect()">Reinspect</button>
-</div>
 <div class="alert alert-danger" *ngIf="error">
     <strong>Warning!</strong> {{error}}
 </div>
 
-<h2>Certificate Chain</h2>
+<h2 style="width: 100%; display: flex; justify-content: space-between;">
+  Certificate Chain
+  <div *ngIf="chain">
+    <button class="btn btn-outline-primary" routerLink="/{{chain.hostname}}/history">History</button>&nbsp;
+    <button class="btn btn-outline-primary" type="submit" (click)="reinspect()">Reinspect</button>
+  </div>
+</h2>
 
 <app-certificate-chain [chain]="chain"></app-certificate-chain>
 

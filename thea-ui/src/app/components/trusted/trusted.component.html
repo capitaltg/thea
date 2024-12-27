@@ -22,7 +22,7 @@
         <div class="row">
           <div class="col-sm-8">
               <a routerLink="/certificate/{{certificate.sha256}}">{{ certificate.subjectDn }}</a>
-              &#160;<span *ngIf="isExpired(certificate.notAfter)" class="badge badge-danger float">Expired</span>
+              &#160;<span *ngIf="isExpired(certificate.notAfter)" class="badge bg-danger float">Expired</span>
           </div>
           <div class="col-sm-2">
               <time datetime='certificate.notBefore'
