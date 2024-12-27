@@ -14,7 +14,7 @@ jobs:
       - name: Set up node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "8.17.0"
+          node-version: 18
           cache: "npm"
           cache-dependency-path: "thea-ui/package-lock.json"
 
@@ -28,8 +28,8 @@ jobs:
       - name: Build UI
         run: |
           cd thea-ui
-          npm install        
-          npm run ng build -- --aot --output-hashing all --extract-css true --build-optimizer --vendor-chunk
+          npm ci
+          npm run ng build -- --aot --output-hashing all --build-optimizer --vendor-chunk
   
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -39,7 +39,7 @@ jobs:
           cache: "gradle"
   
       - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@v1.1.0
+        uses: gradle/actions/wrapper-validation@v4
   
       - name: Build Docker Image
         run: |

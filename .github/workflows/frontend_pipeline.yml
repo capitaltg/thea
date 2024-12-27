@@ -21,10 +21,10 @@ jobs:
       - name: Set up node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "8.17.0"
+          node-version: 18
           cache: "npm"
           cache-dependency-path: "thea-ui/package-lock.json"
       - name: Install dependencies
-        run: npm install        
+        run: npm ci
       - name: Run build
-        run: npm run ng build -- --aot --output-hashing all --extract-css true --build-optimizer --vendor-chunk
+        run: npm run ng build -- --aot --output-hashing all --build-optimizer --vendor-chunk

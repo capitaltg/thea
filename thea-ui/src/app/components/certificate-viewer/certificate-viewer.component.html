@@ -1,4 +1,6 @@
-<div class="float-right">
+<h2 style="width: 100%; display: flex; justify-content: space-between;">
+  View Certificate
+  <div class="float-right">
     <div ngbDropdown class="d-inline-block">
       <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Actions</button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
@@ -9,8 +11,7 @@
       </div>
     </div>
   </div>
-  
-<h2>View Certificate</h2>
+</h2>
 
 <h4>{{certificate?.commonName}}</h4>
 <app-certificate *ngIf="certificate" [certificate]="certificate" [index]="i"></app-certificate>

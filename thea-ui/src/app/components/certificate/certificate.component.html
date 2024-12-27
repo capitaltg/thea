@@ -1,9 +1,13 @@
 <ul class="list-group">
-  <li routerLink="/certificate/{{certificate.sha256}}" class="list-group-item show active">Certificate
-    {{index > -1 ? index+1 : ''}}
-    &nbsp;<span *ngFor="let warning of certificate.warnings" class="badge badge-danger float">{{warning}}</span>
-    &nbsp;<span *ngIf="certificate.trusted" class="badge badge-info float">Trusted anchor certificate</span>
-    <div *ngIf="index > -1" class="float-right"><a routerLink="/certificate/{{certificate.sha256}}">View</a></div>
+  <li routerLink="/certificate/{{certificate.sha256}}" class="list-group-item show active">
+    <div *ngIf="index > -1" class="d-flex justify-content-between">
+      <span>
+        Certificate {{index > -1 ? index+1 : ''}}
+        &nbsp;<span *ngFor="let warning of certificate.warnings" class="badge bg-danger float">{{warning}}</span>
+        &nbsp;<span *ngIf="certificate.trusted" class="badge bg-info float">Trusted anchor certificate</span>
+      </span>
+      <a routerLink="/certificate/{{certificate.sha256}}">View</a>
+    </div>
   </li>
   <li class="list-group-item">
     <div class="row">
