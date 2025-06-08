@@ -30,7 +30,7 @@ Then, point your browser to http://localhost:8080. This command will run Certifi
 docker run -d -p 8080:8080 --env-file thea.env capitaltg/thea
 ```
 
-where thea.env contains:
+where thea.env contains (MySQL):
 
 ```
 SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
@@ -39,7 +39,16 @@ SPRING_DATASOURCE_USERNAME=<db-username>
 SPRING_DATASOURCE_PASSWORD=<db-password>
 ```
 
-Certificate Checker comes bundled with the MySQL JDBC driver.  You can add another JDBC driver to the lib folder and adjust the environment variables file accordingly.
+or (postgres):
+
+```
+SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/postgres
+SPRING_DATASOURCE_USERNAME=postgres
+SPRING_DATASOURCE_PASSWORD=password
+```
+
+Certificate Checker comes bundled with the MySQL and Postgres JDBC drivers.  You can add another JDBC driver to the lib folder and adjust the environment variables file accordingly.
 
 To add additional trusted anchor CAs, you can create a new Docker image with the following Dockerfile:
 
